@@ -60,6 +60,14 @@ namespace Golb
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            // Should not user Database.Migrate() in production,
+            // instead migrations should be done as part of deployment
+            using (var srvc = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = srvc.ServiceProvider.GetService<ApplicationDbContext>();
+                context.Database.Migrate();
+            }
+
             app.UseRouting();
 
             app.UseAuthentication();
