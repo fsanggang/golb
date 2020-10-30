@@ -1,0 +1,33 @@
+@page "/posts"
+
+@using Golb.Data
+@using Golb.Services
+@inject PostService service
+
+@if (posts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (posts.Length == 0)
+{
+    <p>No posts</p>
+}
+else
+{
+    @foreach (Post post in posts)
+    {
+        <h2><a href="/posts/@post.Id">@post.Title</a></h2>
+        <p>@post.PostedAt</p>
+        <p>@post.Body</p>
+     }
+}
+
+@code {
+    private Post[] posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await service.Get();
+        posts = posts.OrderByDescending(post => post.PostedAt).ToArray<Post>();
+    }
+}

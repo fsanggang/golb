@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Golb.Areas.Identity;
 using Golb.Data;
+using Golb.Services;
 
 namespace Golb
 {
@@ -40,6 +41,9 @@ namespace Golb
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
+
+            // Why AddTransient instead of AddSingleton or AddScoped?
+            services.AddTransient<PostService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
