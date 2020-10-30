@@ -1,0 +1,34 @@
+@page "/posts/new"
+
+@using Golb.Data
+@using Golb.Services
+@inject PostService service
+@inject NavigationManager navigationManager
+
+<h2>New Post</h2>
+
+<EditForm Model="@post" OnValidSubmit="@HandleValidSubmit">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <InputText id="title" class="form-control" @bind-Value="@post.Title" />
+    </div>
+
+    <div class="form-group">
+        <label for="body">Body</label>
+        <InputTextArea id="body" class="form-control" @bind-Value="@post.Body" />
+    </div>
+
+    <a class="btn btn-warning" href="/posts">Cancel</a>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+    private Post post = new Post();
+
+    private async void HandleValidSubmit()
+    {
+        post.PostedAt = DateTime.Now;
+        await service.Create(post);
+        navigationManager.NavigateTo("/posts");
+    }
+}

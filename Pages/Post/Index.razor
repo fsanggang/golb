@@ -4,6 +4,13 @@
 @using Golb.Services
 @inject PostService service
 
+<div class="form-group float-right">
+    <a class="btn btn-success" href="posts/new">
+        <i class="oi oi-plus"></i>
+        &nbsp; New Post
+    </a>
+</div>
+
 @if (posts == null)
 {
     <p><em>Loading...</em></p>
