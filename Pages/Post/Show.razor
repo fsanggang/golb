@@ -1,0 +1,29 @@
+@page "/posts/{Id:int}"
+
+@using Golb.Data
+@using Golb.Services
+@inject PostService service
+
+
+@if (post == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h2>@post.Title</h2>
+    <p>@post.PostedAt</p>
+    <p>@post.Body</p>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Post post;
+
+    protected override async Task OnInitializedAsync()
+    {
+        post = await service.Get(Id);
+    }
+}

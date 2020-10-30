@@ -8,6 +8,7 @@ namespace Golb.Services
     public interface IPostService
     {
         Task<Post[]> Get();
+        Task<Post> Get(int id);
         Task<Post> Create(Post post);
     }
     public class PostService : IPostService
@@ -22,6 +23,11 @@ namespace Golb.Services
         public async Task<Post[]> Get()
         {
             return await _context.Posts.ToArrayAsync();
+        }
+
+        public async Task<Post> Get(int id)
+        {
+            return await _context.Posts.FirstOrDefaultAsync(post => post.Id == id);
         }
 
         public async Task<Post> Create(Post post)
