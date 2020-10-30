@@ -4,6 +4,12 @@
 @using Golb.Services
 @inject PostService service
 
+<div class="form-group float-right">
+    <a class="btn btn-success" href="posts/@Id/edit">
+        <i class="oi oi-pencil"></i>
+        &nbsp; Edit Post
+    </a>
+</div>
 
 @if (post == null)
 {

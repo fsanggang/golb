@@ -36,5 +36,12 @@ namespace Golb.Services
             await _context.SaveChangesAsync();
             return post;
         }
+
+        public async Task<Post> Update(Post post)
+        {
+            _context.Posts.Update(post);
+            await _context.SaveChangesAsync();
+            return post;
+        }
     }
 }
