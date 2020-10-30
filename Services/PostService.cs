@@ -10,6 +10,7 @@ namespace Golb.Services
         Task<Post[]> Get();
         Task<Post> Get(int id);
         Task<Post> Create(Post post);
+        Task<Post> Delete(Post post);
     }
     public class PostService : IPostService
     {
@@ -40,6 +41,13 @@ namespace Golb.Services
         public async Task<Post> Update(Post post)
         {
             _context.Posts.Update(post);
+            await _context.SaveChangesAsync();
+            return post;
+        }
+
+        public async Task<Post> Delete(Post post)
+        {
+            _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
             return post;
         }

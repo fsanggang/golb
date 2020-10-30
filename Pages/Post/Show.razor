@@ -3,12 +3,19 @@
 @using Golb.Data
 @using Golb.Services
 @inject PostService service
+@inject NavigationManager navigationManager
+@inject IJSRuntime JsRuntime
 
 <div class="form-group float-right">
     <a class="btn btn-success" href="posts/@Id/edit">
         <i class="oi oi-pencil"></i>
         &nbsp; Edit Post
     </a>
+
+    <button type="button" class="btn btn-danger" @onclick="@(()=> HandleDelete(@post))">
+        <i class="oi oi-trash"></i>
+        &nbsp; Delete Post
+    </button>
 </div>
 
 @if (post == null)
@@ -27,9 +34,21 @@ else
     public int Id { get; set; }
 
     private Post post;
+    private bool confirmDelete;
 
     protected override async Task OnInitializedAsync()
     {
         post = await service.Get(Id);
+    }
+
+    private async void HandleDelete(Post post)
+    {
+        confirmDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+
+        if (confirmDelete)
+        {
+            await service.Delete(post);
+            navigationManager.NavigateTo("/posts");
+        }
     }
 }
