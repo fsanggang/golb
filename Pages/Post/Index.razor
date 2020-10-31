@@ -4,12 +4,14 @@
 @using Golb.Services
 @inject PostService service
 
-<div class="form-group float-right">
-    <a class="btn btn-success" href="posts/new">
-        <i class="oi oi-plus"></i>
-        &nbsp; New Post
-    </a>
-</div>
+<AuthorizeView Roles="Admin">
+    <div class="form-group float-right">
+        <a class="btn btn-success" href="posts/new">
+            <i class="oi oi-plus"></i>
+            &nbsp; New Post
+        </a>
+    </div>
+</AuthorizeView>
 
 @if (posts == null)
 {

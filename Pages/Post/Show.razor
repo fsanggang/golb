@@ -6,17 +6,19 @@
 @inject NavigationManager navigationManager
 @inject IJSRuntime JsRuntime
 
-<div class="form-group float-right">
-    <a class="btn btn-success" href="posts/@Id/edit">
-        <i class="oi oi-pencil"></i>
-        &nbsp; Edit Post
-    </a>
+<AuthorizeView Roles="Admin">
+  <div class="form-group float-right">
+      <a class="btn btn-success" href="posts/@Id/edit">
+          <i class="oi oi-pencil"></i>
+          &nbsp; Edit Post
+      </a>
 
-    <button type="button" class="btn btn-danger" @onclick="@(()=> HandleDelete(@post))">
-        <i class="oi oi-trash"></i>
-        &nbsp; Delete Post
-    </button>
-</div>
+      <button type="button" class="btn btn-danger" @onclick="@(()=> HandleDelete(@post))">
+          <i class="oi oi-trash"></i>
+          &nbsp; Delete Post
+      </button>
+  </div>
+</AuthorizeView>
 
 @if (post == null)
 {
