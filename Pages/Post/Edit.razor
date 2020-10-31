@@ -14,25 +14,7 @@
 }
 else
 {
-    <EditForm Model="@post" OnValidSubmit="@HandleValidSubmit">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <InputText id="title" class="form-control" @bind-Value="@post.Title" />
-        </div>
-
-        <div class="row">
-            <div class="col-6">
-                <input type="hidden" @bind-value="@post.Body" />
-                <textarea rows="20" class="form-control" id="body" @bind="@post.Body" @bind:event="oninput" />
-            </div>
-            <div class="col-6">
-                @((MarkupString) post.MarkupString)
-            </div>
-        </div>
-
-        <a class="btn btn-warning" href="/posts/@post.Id">Cancel</a>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </EditForm>
+    <Form post="@post" OnFormValidSubmit="@HandleFormValidSubmit"/>
 }
 
 @code {
@@ -46,7 +28,7 @@ else
         post = await service.Get(Id);
     }
 
-    private async void HandleValidSubmit()
+    private async Task HandleFormValidSubmit()
     {
         post.PostedAt = DateTime.Now;
         await service.Update(post);
