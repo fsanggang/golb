@@ -1,3 +1,4 @@
+using Markdig;
 using System;
 
 namespace Golb.Data
@@ -16,6 +17,12 @@ namespace Golb.Data
             get
             {
                 return (this.Body.Length <= PREVIEW_LENGTH) ? this.Body : this.Body.Substring(0, PREVIEW_LENGTH) + "...";
+            }
+        }
+
+        public string MarkupString {
+            get {
+                return Markdown.ToHtml(this.Body);
             }
         }
     }
