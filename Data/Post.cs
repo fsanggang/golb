@@ -21,8 +21,9 @@ namespace Golb.Data
         }
 
         public string MarkupString {
-            get {
-                return Markdown.ToHtml(this.Body);
+            get
+            {
+                return this.Body == null ? "" : Markdown.ToHtml(this.Body);
             }
         }
     }
